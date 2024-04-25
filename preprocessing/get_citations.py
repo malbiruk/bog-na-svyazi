@@ -42,13 +42,13 @@ def extract_citations_from_soup(soup: BeautifulSoup) -> list[dict[str, str]]:
     return quotes
 
 
-def main():
+def main(out: str = '../data/quotes.json'):
     quotes = []
     for i in tqdm(range(26)):
         soup = get_soup(f'https://citaty.info/book/bibliya-novyi-zavet?page={i}')
         quotes.extend(extract_citations_from_soup(soup))
 
-    with open('quotes.json', 'w', encoding='utf-8') as f:
+    with open(out, 'w', encoding='utf-8') as f:
         json.dump(quotes, f, ensure_ascii=False, indent=2)
 
 
