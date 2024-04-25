@@ -3,12 +3,13 @@ This script is used to retrieve quotes from citaty.info and save them to drive.
 '''
 import json
 import logging
+from pathlib import Path
 
 import httpx
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('__main__')
 
 
 def get_soup(url: str) -> BeautifulSoup:
@@ -42,9 +43,10 @@ def extract_citations_from_soup(soup: BeautifulSoup) -> list[dict[str, str]]:
     return quotes
 
 
-def main(out: str = '../data/quotes.json'):
+def main(out: Path = Path('data/quotes.json')):
     quotes = []
-    for i in tqdm(range(26)):
+    logger.info('downloading quotes... ⬇')
+    for i in tqdm(range(26), leave=False):
         soup = get_soup(f'https://citaty.info/book/bibliya-novyi-zavet?page={i}')
         quotes.extend(extract_citations_from_soup(soup))
 
@@ -53,4 +55,4 @@ def main(out: str = '../data/quotes.json'):
 
 
 if __name__ == '__main__':
-    main()
+    main(Path('../data/quotes.json'))
