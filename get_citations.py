@@ -1,5 +1,5 @@
 '''
-This script is used to retrieve citations from citaty.info and save them to drive.
+This script is used to retrieve quotes from citaty.info and save them to drive.
 '''
 import json
 import logging
