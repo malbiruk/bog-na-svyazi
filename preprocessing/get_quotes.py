@@ -9,7 +9,7 @@ import httpx
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-logger = logging.getLogger('__main__')
+logger = logging.getLogger('app.' + __name__)
 
 
 def get_soup(url: str) -> BeautifulSoup:
@@ -30,6 +30,8 @@ def extract_citations_from_soup(soup: BeautifulSoup) -> list[dict[str, str]]:
     for quote_div in soup.find_all('div', class_='node__content'):
         citation = quote_div.find('div', class_='field-name-body')
         citation = ' '.join(citation.text.strip().split())
+        if citation.endswith('?') or citation == 'Я глас вопиющего в пустыне.':
+            continue
 
         description = quote_div.find('div', class_='field-name-field-description')
         if description:
@@ -55,4 +57,4 @@ def main(out: Path = Path('data/quotes.json')):
 
 
 if __name__ == '__main__':
-    main(Path('../data/quotes.json'))
+    main()
