@@ -17,7 +17,7 @@ def parse_text(text: str) -> list:
 
     def add_quote(verse_text, current_book, current_section, verse_number):
         quote = {
-            "quote": verse_text,
+            "quote": verse_text.capitalize(),
             "from": f"{current_book} {current_section}:{verse_number}"
         }
         if not (verse_text.endswith('?') or verse_text=='Вот, Я наперед сказал вам.'):
