@@ -6,7 +6,6 @@ from pathlib import Path
 from config import initialize_logging
 from preprocessing.embed_quotes import main as embed_quotes
 from preprocessing.parse_books import main as parse_books
-from test_outputs.test import main as test_outputs
 
 logger = initialize_logging()
 
