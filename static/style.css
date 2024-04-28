@@ -107,12 +107,10 @@ p {
   border: 0;
 }
 
-#quote {
-  display: none;
-}
-
+#quote,
 #from {
   display: none;
+  font-size: min(.95vw * 2.5, 1.65vh * 2.5);
 }
 
 .prompt {

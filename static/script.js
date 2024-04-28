@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
           // change Jesus state
           document.getElementById("JesusWebp").srcset = "/static/imgs/jesus3.webp";
           document.getElementById("JesusPng").src = "/static/imgs/jesus3.png";
-          gospod.style.maxWidth = "50%";
+          gospod.style.maxWidth = "35%";
           gospod.style.paddingBottom = "0%";
 
           // hide search box
