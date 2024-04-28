@@ -35,7 +35,7 @@ def generate_data_files():
     if not Path('data/verses.json').exists():
         parse_books()
     if not Path('data/verses_with_embeddings.json').exists():
-        embed_quotes('data/verses.json', 'data/verses_with_embeddings.json')
+        embed_quotes()
 
 
 def main():

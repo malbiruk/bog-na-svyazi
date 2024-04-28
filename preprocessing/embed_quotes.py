@@ -8,8 +8,8 @@ from tqdm import tqdm
 logger = logging.getLogger('app.' + __name__)
 
 
-def main(inp: Path = Path('data/quotes.json'),
-         out: Path = Path('data/quotes_with_embeddings.json'),
+def main(inp: Path = Path('data/verses.json'),
+         out: Path = Path('data/verses_with_embeddings.json'),
          model_name: str = 'cointegrated/rubert-tiny2'):
     logger.info('embedding quotes... ⚗')
     model = SentenceTransformer(model_name)
