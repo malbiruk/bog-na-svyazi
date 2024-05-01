@@ -11,7 +11,7 @@ from preprocessing.embed_quotes import main as embed_quotes
 from preprocessing.parse_books import main as parse_books
 from process_query import answer_with_quote
 
-logger = initialize_logging(level=logging.DEBUG)
+logger = initialize_logging(level=logging.INFO)
 
 app = Flask(__name__)
 app.static_folder = 'static'
@@ -73,4 +73,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)

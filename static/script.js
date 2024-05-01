@@ -7,10 +7,10 @@ function animateRays(gospod) {
 
   var gospodPaddingBottom = parseFloat(window.getComputedStyle(gospod).paddingBottom);
   if (window.matchMedia("(max-aspect-ratio: 2/3) and (orientation: portrait)").matches) {
-    gospodY = gospodY - gospodPaddingBottom - nimbHeight/2;
-} else {
-    gospodY = gospodY - gospodPaddingBottom + nimbHeight/2;
-}
+    gospodY = gospodY - gospodPaddingBottom - nimbHeight / 2;
+  } else {
+    gospodY = gospodY - gospodPaddingBottom + nimbHeight / 2;
+  }
 
 
   // Calculate positions for rays on both sides
@@ -128,7 +128,7 @@ window.onload = function() {
     neboNad.style.bottom = "-3%";
     neboPod.style.bottom = "-3%";
   }
-
+  
   // trigger search
   searchButton.addEventListener("click", function() {
     processSearch();
@@ -175,6 +175,13 @@ window.onload = function() {
           // ANSWER STATE
 
           const response = JSON.parse(xhr.responseText);
+          if (!window.matchMedia("(max-aspect-ratio: 2/3) and (orientation: portrait)").matches) {
+            container.style.marginTop = "0%";
+          } else{
+            container.style.marginTop = "0%";
+            container.style.maxWidth = "90%";
+          }
+
           // restore sky brightness
           overlay.style.animation = "none";
           overlay.style.background = "(0,0,0,0)";
@@ -190,15 +197,14 @@ window.onload = function() {
           gospod.style.top = "auto";
           gospod.style.left = "auto";
           gospod.style.scale = "0%";
-          gospod.style.opacity="100%";
-          gospod.style.MaxWidth="auto";
-          gospod.style.paddingBottom="auto";
+          gospod.style.opacity = "100%";
+          gospod.style.MaxWidth = "auto";
+          gospod.style.paddingBottom = "auto";
           gospod.classList.add("gospod-3");
 
           // change Jesus image
           JesusWebp.srcset = "/static/imgs/jesus3.webp";
           JesusPng.src = "/static/imgs/jesus3.png";
-
 
           // hide search box
           searchImg.style.display = "none";
@@ -214,8 +220,10 @@ window.onload = function() {
           from.style.opacity = "0%";
           from.style.scale = "0%";
 
+
+
+
           // display thumbs
-          container.style.marginTop = "0%";
           thumbs.style.display = "flex";
           thumbs.style.opacity = "0%";
 
