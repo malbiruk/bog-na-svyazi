@@ -26,8 +26,14 @@ function animateRays(gospod) {
   var angleRad = Math.atan2(deltaRightY, deltaRightX);
   var angleRightDeg = angleRad * (180 / Math.PI) - 90;
 
+  // Aniamte rays 
+  rayLeft.style.transition = "transform 1s ease-in-out, opacity 0.8s ease-in-out 1.5s";
+  rayRight.style.transition = "transform 1s ease-in-out, opacity 0.8s ease-in-out 1.5s";
+
   rayLeft.style.transform = `rotate(${angleLeftDeg}deg)`;
-  rayRight.style.transform = `rotate(${angleRightDeg}deg)`;
+  rayRight.style.transform = `rotate(${360+angleRightDeg}deg)`;
+  rayLeft.style.opacity = 0;
+  rayRight.style.opacity = 0;
 }
 
 window.onload = function() {
