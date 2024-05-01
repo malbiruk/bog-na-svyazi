@@ -6,7 +6,12 @@ function animateRays(gospod) {
   var nimbHeight = gospodRect.height * 64 / 294
 
   var gospodPaddingBottom = parseFloat(window.getComputedStyle(gospod).paddingBottom);
-  gospodY = gospodY - gospodPaddingBottom + nimbHeight/2;
+  if (window.matchMedia("(max-aspect-ratio: 2/3) and (orientation: portrait)").matches) {
+    gospodY = gospodY - gospodPaddingBottom - nimbHeight/2;
+} else {
+    gospodY = gospodY - gospodPaddingBottom + nimbHeight/2;
+}
+
 
   // Calculate positions for rays on both sides
   var rayLeft = document.getElementById("ray-left");

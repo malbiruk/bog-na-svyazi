@@ -343,7 +343,7 @@ p {
 
 .light-anim {
   animation: light 0.7s ease-in-out 1.3s,
-    fade_in 0.5s ease-in-out 1s 1 forwards;
+    fade_in 0.3s ease-in-out 1.3s 1 forwards;
 }
 
 /* Support page */
@@ -447,11 +447,11 @@ p {
   }
 
   #ray-left {
-    left: -60vw;
+    left: -50vw;
   }
 
   #ray-right {
-    right: -60vw;
+    right: -50vw;
   }
 
   .gospod-3 {
