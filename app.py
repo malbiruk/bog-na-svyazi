@@ -1,23 +1,36 @@
 '''
 This is the main script
 '''
-from pathlib import Path
 import json
+import logging
+from pathlib import Path
 
 from config import initialize_logging
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, render_template, request
 from preprocessing.embed_quotes import main as embed_quotes
 from preprocessing.parse_books import main as parse_books
 from process_query import answer_with_quote
 
-logger = initialize_logging()
+logger = initialize_logging(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.static_folder = 'static'
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/support')
+def support():
+    return render_template('support.html')
+
+
+@app.route('/error')
+def error():
+    return render_template('error.html')
+
 
 @app.route('/process', methods=['POST'])
 def process_input():
@@ -27,8 +40,24 @@ def process_input():
 
     data = request.get_json()
     user_input = data['query']
+    logger.debug(f'got input: {user_input}')
     quote = answer_with_quote(user_input, verses)
+    logger.debug(f'quote: {quote["quote"]}\n'
+                 f'from: {quote["from"]}\n'
+                 f'score: {quote["score"]}')
     return jsonify(quote)
+
+
+@app.route('/record-feedback', methods=['POST'])
+def record_feedback():
+    if not Path('data/feedback.tsv').exists():
+        with open(Path('data/feedback.tsv'), 'w', encoding='utf-8') as f:
+            f.write('user_input\tquote\tfeedback\n')
+    data = request.get_json()
+    logger.debug(f'got feedback: {data}')
+    with open(Path('data/feedback.tsv'), 'a', encoding='utf-8') as f:
+        f.write(f'{data["query"]}\t{data["quote"][1:-1]}\t{data["feedback"]}\n')
+    return jsonify('OK')
 
 
 def generate_data_files():

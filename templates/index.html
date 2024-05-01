@@ -19,14 +19,14 @@
 
 <body>
   <div class="pc-snap">
-    <div class="container">
+    <div id="container">
       <div id="gospod" class="gospod">
         <picture>
           <source id="JesusWebp" type="image/webp" srcset="/static/imgs/jesus1.webp" />
           <img src="/static/imgs/jesus1.png" alt="Иисус Христос" id="JesusPng">
         </picture>
       </div>
-      <div class="search-box">
+      <div class="search-box" id="searchBox">
         <div class="search-img" id="searchImg">
           <picture>
             <source id="searchWebp" type="image/webp" srcset="/static/imgs/stroka.webp" />
@@ -40,22 +40,46 @@
           <button id="searchButton"></button>
         </div>
       </div>
+      <div id="answerText">
       <p id="quote"></p>
       <p id="from"></p>
-      <p class="prompt" id="prompt">что тревожит тебя, дитя моё?</p>
     </div>
-    <div class="nebo-pod">
+      <p id="prompt">что тревожит тебя, дитя моё?</p>
+    </div>
+    <div id="neboPod">
       <picture>
         <source type="image/webp" srcset="/static/imgs/nebo_pod.webp" />
         <img src="/static/imgs/nebo_pod.png" alt="Облака">
       </picture>
     </div>
-    <div class="nebo-nad">
+    <div id="neboNad">
       <picture>
         <source type="image/webp" srcset="/static/imgs/nebo_nad.webp" />
         <img src="/static/imgs/nebo_nad.png" alt="Облака">
       </picture>
     </div>
+    <div id="thumbs">
+      <a id="thumbsUp" href="{{ url_for('support') }}">
+        <picture>
+          <source type="image/webp" srcset="/static/imgs/thumbs_up.webp" />
+          <img src="/static/imgs/thumbs_up.png" alt="Цитата подходит">
+        </picture>
+      </a>
+        <a id="thumbsDown" href="{{ url_for('support') }}">
+          <picture>
+            <source type="image/webp" srcset="/static/imgs/thumbs_down.webp" />
+            <img src="/static/imgs/thumbs_down.png" alt="Цитата подходит">
+          </picture>
+        </a>
+    </div>
+    <picture>
+      <source type="image/webp" srcset="/static/imgs/ray.webp" />
+      <img src="/static/imgs/ray.png" alt="Луч" class="ray" id="ray-left">
+    </picture>
+    <picture>
+      <source type="image/webp" srcset="/static/imgs/ray.webp" />
+      <img src="/static/imgs/ray.png" alt="Луч" class="ray" id="ray-right">
+    </picture>
   </div>
   <script src="/static/script.js"></script>
 </body>

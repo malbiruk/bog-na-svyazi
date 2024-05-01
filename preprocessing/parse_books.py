@@ -17,10 +17,14 @@ def parse_text(text: str) -> list:
 
     def add_quote(verse_text, current_book, current_section, verse_number):
         quote = {
-            "quote": verse_text.capitalize(),
-            "from": f"{current_book} {current_section}:{verse_number}"
+            "quote": verse_text[0].upper() + verse_text[1:],
+            "from": (f"{current_book} {current_section}:{verse_number}" if current_section
+                     else f"{current_book} {verse_number}")
         }
-        if not (verse_text.endswith('?') or verse_text=='Вот, Я наперед сказал вам.'):
+        banned_verses = ['Что же скажем? неужели неправда у бога? никак.',
+                         'Пророчества не уничижайте.',
+                         'Вот, Я наперед сказал вам.']
+        if not (verse_text.endswith('?') or (verse_text.lower() in map(str.lower, banned_verses))):
             quotes.append(quote)
 
     def handle_verse(verse_number, verse_text):
@@ -59,7 +63,7 @@ def main(inp: Path = Path('data/Автор_неизвестен_Библия_Н�
          out: Path = Path('data/verses.json'),
          inp_encoding='WINDOWS-1251'):
 
-    logger.info(f'parsing {inp.name}... ⏳')
+    logger.debug(f'parsing {inp.name}... ⏳')
     with open(inp, encoding=inp_encoding) as f:
         text = f.read()
     verses = parse_text(text)
