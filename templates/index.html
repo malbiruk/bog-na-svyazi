@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <meta name="description" content="Бог на связи -- психологическая помощь и  духовная поддержка через цитаты из Евангелия">
   <meta property="og:title" content="Бог на связи" />
   <meta property="og:description" content="Бог на связи -- психологическая помощь и  духовная поддержка через цитаты из Евангелия" />
@@ -19,6 +19,7 @@
 
 <body>
   <div class="pc-snap">
+    <div id="overlay"></div>
     <div id="container">
       <div id="gospod" class="gospod">
         <picture>
@@ -31,10 +32,6 @@
           <picture>
             <source id="searchWebp" type="image/webp" srcset="/static/imgs/stroka.webp" />
             <img src="/static/imgs/stroka.png" alt="Строка поиска" id="searchPng">
-          </picture>
-          <picture>
-            <source type="image/webp" srcset="/static/imgs/vibran.webp" />
-            <img src="/static/imgs/vibran.png" id="searchDisabler">
           </picture>
           <input type="text" id="searchInput">
           <button id="searchButton"></button>
@@ -80,7 +77,13 @@
       <source type="image/webp" srcset="/static/imgs/ray.webp" />
       <img src="/static/imgs/ray.png" alt="Луч" class="ray" id="ray-right">
     </picture>
+    <div class="circle-rays">
+    <picture>
+      <source type="image/webp" srcset="/static/imgs/circle_rays.webp" />
+      <img src="/static/imgs/circle_rays.png" alt="Лучи" id="circle-rays">
+    </picture>
   </div>
+</div>
   <script src="/static/script.js"></script>
 </body>
 

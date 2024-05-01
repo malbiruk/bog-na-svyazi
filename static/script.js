@@ -4,6 +4,9 @@ function animateRays(gospod) {
   var gospodX = gospodRect.left + (gospodRect.width / 2);
   var gospodY = gospodRect.top + (gospodRect.height / 2);
 
+  var gospodPaddingBottom = parseFloat(window.getComputedStyle(gospod).paddingBottom);
+  gospodY -= gospodPaddingBottom;
+
   // Calculate positions for rays on both sides
   var rayLeft = document.getElementById("ray-left");
   var rayLeftRect = rayLeft.getBoundingClientRect();
@@ -26,9 +29,9 @@ function animateRays(gospod) {
   var angleRad = Math.atan2(deltaRightY, deltaRightX);
   var angleRightDeg = angleRad * (180 / Math.PI) - 90;
 
-  // Aniamte rays 
-  rayLeft.style.transition = "transform 1s ease-in-out, opacity 0.8s ease-in-out 1.5s";
-  rayRight.style.transition = "transform 1s ease-in-out, opacity 0.8s ease-in-out 1.5s";
+  // Aniamte rays
+  rayLeft.style.transition = "transform 1.3s ease-in-out, opacity 0.8s ease-in-out 1.5s";
+  rayRight.style.transition = "transform 1.3s ease-in-out, opacity 0.8s ease-in-out 1.5s";
 
   rayLeft.style.transform = `rotate(${angleLeftDeg}deg)`;
   rayRight.style.transform = `rotate(${360+angleRightDeg}deg)`;
@@ -36,9 +39,52 @@ function animateRays(gospod) {
   rayRight.style.opacity = 0;
 }
 
+function animateGospodThinking(gospod, gospodImg) {
+  const gospodRect = gospod.getBoundingClientRect();
+  const initialX = gospodRect.left;
+  const initialY = gospodRect.top;
+  const width = gospodRect.width;
+  const height = gospodRect.height
+
+  setTimeout(function() {
+    gospod.style.position = "absolute";
+    gospod.style.top = initialY + "px";
+    gospod.style.left = initialX + "px";
+    gospod.style.width = width + "px";
+    gospod.style.height = height + "px";
+  }, 500);
+
+  const windowHeight = window.innerHeight;
+  const finalY = (windowHeight - height * 5 / 4) / 2 - initialY;
+
+  gospod.style.transition = "transform 1.5s ease-in-out 0.5s";
+  gospod.style.transform = `scale(2) translateY(${finalY}px)`;
+  gospodImg.style.animation = "rotate_jesus 5.5s linear 0.5s infinite";
+}
+
+function animateCiircleRays(img) {
+  img.style.scale = ".01";
+  const imgWidth = img.width;
+  const imgHeight = img.height;
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+  const scaleX = viewportWidth / imgWidth;
+  const scaleY = viewportHeight / imgHeight;
+  const scaleFactor = Math.max(scaleX, scaleY);
+
+  img.style.transition = "transform 1.5s ease-out";
+  img.style.transform = `scale(${scaleFactor*400})`;
+
+  setTimeout(function() {
+    img.style.display = "none";
+  }, 1500);
+}
+
 window.onload = function() {
   // initializing element constants
   const gospod = document.getElementById("gospod");
+  const JesusPng = document.getElementById("JesusPng");
+  const JesusWebp = document.getElementById("JesusWebp");
   const searchButton = document.getElementById("searchButton");
   const searchDisabler = document.getElementById("searchDisabler");
   const searchBox = document.getElementById("searchBox");
@@ -54,9 +100,12 @@ window.onload = function() {
   const thumbsDown = document.getElementById("thumbsDown");
   const container = document.getElementById("container");
   const answerText = document.getElementById("answerText");
+  const overlay = document.getElementById("overlay");
+  const circleRays = document.getElementById("circle-rays");
 
+  // INIT STATE
   quote.style.display = "none";
-  container.style.marginTop = "-12%";
+  container.classList.add("container-margin-top");
 
   // start animations
   const urlParams = new URLSearchParams(window.location.search);
@@ -64,10 +113,10 @@ window.onload = function() {
   if (!restart) {
     animateRays(gospod)
     gospod.classList.add("light-anim");
-    searchBox.classList.add("search-fade-in");
-    prompt.classList.add("search-fade-in");
-    neboNad.classList.add("nebo2-slide-in");
-    neboPod.classList.add("nebo1-slide-in");
+    searchBox.style.animation = "fade_in 1s ease-in-out 1s 1 forwards";
+    prompt.style.animation = "fade_in 1s ease-in-out 1s 1 forwards";
+    neboNad.style.animation = "slide_in 2s ease-in-out 0s 1 forwards";
+    neboPod.style.animation = "slide_in 1.5s ease-in-out 0s 1 forwards";
   } else {
     gospod.style.opacity = "100%";
     searchBox.style.opacity = "100%";
@@ -87,20 +136,30 @@ window.onload = function() {
   });
 
   function processSearch() {
+    // LOADING STATE
     const userInput = document.getElementById("searchInput").value;
 
     // change Jesus state
-    document.getElementById("JesusWebp").srcset = "/static/imgs/jesus2.webp";
-    document.getElementById("JesusPng").src = "/static/imgs/jesus2.png";
+    JesusWebp.srcset = "/static/imgs/jesus2.webp";
+    JesusPng.src = "/static/imgs/jesus2.png";
+
+    animateGospodThinking(gospod, JesusPng)
+    // reduce brightness
+    overlay.style.animation = "reduce_brightness 1.7s ease-in-out 0s 1 forwards"
 
     // disable search
-    searchDisabler.style.display = "inline";
     searchInput.disabled = true;
     searchButton.disabled = true;
 
+    // remove search
+    searchBox.style.animation = "fade_out 0.5s ease-in-out 0s 1 forwards";
+    prompt.style.animation = "fade_out 0.5s ease-in-out 0s 1 forwards";
+
     // remove clouds
-    neboNad.style.display = "none";
-    neboPod.style.display = "none";
+    neboNad.style.bottom = "-3%";
+    neboPod.style.bottom = "-3%";
+    neboNad.style.animation = "slide_out 1.5s ease-in-out 0s 1 forwards";
+    neboPod.style.animation = "slide_out 2s ease-in-out 0s 1 forwards";
 
     // receive response from backend
     const xhr = new XMLHttpRequest();
@@ -109,12 +168,33 @@ window.onload = function() {
     xhr.onreadystatechange = function() {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
+          // ANSWER STATE
+
           const response = JSON.parse(xhr.responseText);
-          // change Jesus state
-          document.getElementById("JesusWebp").srcset = "/static/imgs/jesus3.webp";
-          document.getElementById("JesusPng").src = "/static/imgs/jesus3.png";
-          gospod.style.maxWidth = "35%";
-          gospod.style.paddingBottom = "0%";
+          // restore sky brightness
+          overlay.style.animation = "none";
+          overlay.style.background = "(0,0,0,0)";
+
+          // return Jesus
+          JesusPng.style.animation = "none";
+          gospod.classList.remove("light-anim")
+          gospod.style.position = "relative";
+          gospod.style.transform = "none";
+          gospod.style.transition = "none";
+          gospod.style.width = "auto";
+          gospod.style.height = "auto";
+          gospod.style.top = "auto";
+          gospod.style.left = "auto";
+          gospod.style.scale = "0%";
+          gospod.style.opacity="100%";
+          gospod.style.MaxWidth="auto";
+          gospod.style.paddingBottom="auto";
+          gospod.classList.add("gospod-3");
+
+          // change Jesus image
+          JesusWebp.srcset = "/static/imgs/jesus3.webp";
+          JesusPng.src = "/static/imgs/jesus3.png";
+
 
           // hide search box
           searchImg.style.display = "none";
@@ -122,13 +202,25 @@ window.onload = function() {
 
           // display quote
           quote.textContent = response.quote;
-          from.textContent = response.from;
           quote.style.display = "block";
+          quote.style.opacity = "0%";
+          quote.style.scale = "0%";
+          from.textContent = response.from;
           from.style.display = "block";
+          from.style.opacity = "0%";
+          from.style.scale = "0%";
 
           // display thumbs
           container.style.marginTop = "0%";
           thumbs.style.display = "flex";
+          thumbs.style.opacity = "0%";
+
+          // animations
+          animateCiircleRays(circleRays)
+          gospod.style.animation = "scale_in 0.3s ease-out forwards";
+          quote.style.animation = "scale_in 0.3s ease-out forwards, fade_in 0.3s ease-out forwards";
+          from.style.animation = "scale_in 0.3s ease-out forwards, fade_in_from 0.3s ease-in-out forwards";
+          thumbs.style.animation = "fade_in 0.7s ease-in-out 0.2s forwards";
 
           // record feedback
           thumbsUp.addEventListener("click", function(event) {
