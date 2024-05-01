@@ -3,9 +3,10 @@ function animateRays(gospod) {
   var gospodRect = gospod.getBoundingClientRect();
   var gospodX = gospodRect.left + (gospodRect.width / 2);
   var gospodY = gospodRect.top + (gospodRect.height / 2);
+  var nimbHeight = gospodRect.height * 64 / 294
 
   var gospodPaddingBottom = parseFloat(window.getComputedStyle(gospod).paddingBottom);
-  gospodY -= gospodPaddingBottom;
+  gospodY = gospodY - gospodPaddingBottom + nimbHeight/2;
 
   // Calculate positions for rays on both sides
   var rayLeft = document.getElementById("ray-left");
@@ -14,22 +15,20 @@ function animateRays(gospod) {
   var rayRightRect = rayRight.getBoundingClientRect();
 
   // Calculate transformations to make rays point towards #gospod
-  rayLeft.style.width = gospodRect.height + "px";
+  rayLeft.style.width = gospodRect.height - nimbHeight + "px";
   var deltaLeftY = gospodY - rayLeftRect.top;
   var deltaLeftX = gospodX - (rayLeftRect.left + rayLeftRect.right) / 2;
-  rayLeft.style.width = gospodRect.height + "px";
   rayLeft.style.height = Math.sqrt(deltaLeftX * deltaLeftX + deltaLeftY * deltaLeftY) * 1.5 + "px";
   var angleRad = Math.atan2(deltaLeftY, deltaLeftX);
   var angleLeftDeg = angleRad * (180 / Math.PI) - 90;
-  rayRight.style.width = gospodRect.height + "px";
+  rayRight.style.width = gospodRect.height - nimbHeight + "px";
   var deltaRightY = gospodY - rayRightRect.top;
   var deltaRightX = gospodX - (rayRightRect.left + rayRightRect.right) / 2;
-  rayRight.style.width = gospodRect.height + "px";
   rayRight.style.height = Math.sqrt(deltaRightX * deltaRightX + deltaRightY * deltaRightY) * 1.5 + "px";
   var angleRad = Math.atan2(deltaRightY, deltaRightX);
   var angleRightDeg = angleRad * (180 / Math.PI) - 90;
 
-  // Aniamte rays
+  // Animate rays
   rayLeft.style.transition = "transform 1.3s ease-in-out, opacity 0.8s ease-in-out 1.5s";
   rayRight.style.transition = "transform 1.3s ease-in-out, opacity 0.8s ease-in-out 1.5s";
 
@@ -113,8 +112,8 @@ window.onload = function() {
   if (!restart) {
     animateRays(gospod)
     gospod.classList.add("light-anim");
-    searchBox.style.animation = "fade_in 1s ease-in-out 1s 1 forwards";
-    prompt.style.animation = "fade_in 1s ease-in-out 1s 1 forwards";
+    searchBox.style.animation = "fade_in 1s ease-in-out 1.3s 1 forwards";
+    prompt.style.animation = "fade_in 1s ease-in-out 1.3s 1 forwards";
     neboNad.style.animation = "slide_in 2s ease-in-out 0s 1 forwards";
     neboPod.style.animation = "slide_in 1.5s ease-in-out 0s 1 forwards";
   } else {
