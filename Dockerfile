@@ -8,6 +8,5 @@ RUN pip install --no-cache-dir sentence-transformers
 RUN pip install -r requirements.txt --no-cache-dir
 COPY . .
 RUN python3 app.py
-EXPOSE 80
 
-CMD ["gunicorn", "-b", "0.0.0.0:80", "-w", "4", "app:app"]
+CMD gunicorn -b 0.0.0.0:$PORT -w4 app:app
