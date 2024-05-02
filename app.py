@@ -66,11 +66,7 @@ def generate_data_files():
     if not Path('data/verses_with_embeddings.json').exists():
         embed_quotes()
 
-
-def main():
-    generate_data_files()
-
+generate_data_files()
 
 if __name__ == '__main__':
-    main()
     app.run(host='0.0.0.0')
