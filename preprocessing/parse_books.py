@@ -63,7 +63,7 @@ def main(inp: Path = Path('data/Автор_неизвестен_Библия_Н�
          out: Path = Path('data/verses.json'),
          inp_encoding='WINDOWS-1251'):
 
-    logger.debug(f'parsing {inp.name}... ⏳')
+    logger.info(f'parsing {inp.name}... ⏳')
     with open(inp, encoding=inp_encoding) as f:
         text = f.read()
     verses = parse_text(text)
