@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt --no-cache-dir
 COPY . .
 RUN python3 app.py
 
-CMD gunicorn -b 0.0.0.0:$PORT -w4 app:app
+CMD gunicorn -b 0.0.0.0:$PORT -w 2 app:app
