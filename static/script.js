@@ -128,7 +128,7 @@ window.onload = function() {
     neboNad.style.bottom = "-3%";
     neboPod.style.bottom = "-3%";
   }
-  
+
   // trigger search
   searchButton.addEventListener("click", function() {
     processSearch();
@@ -219,9 +219,6 @@ window.onload = function() {
           from.style.display = "block";
           from.style.opacity = "0%";
           from.style.scale = "0%";
-
-
-
 
           // display thumbs
           thumbs.style.display = "flex";
