@@ -50,12 +50,13 @@ def process_input():
 
 @app.route('/record-feedback', methods=['POST'])
 def record_feedback():
-    if not Path('data/feedback.tsv').exists():
-        with open(Path('data/feedback.tsv'), 'w', encoding='utf-8') as f:
+    fb_path = Path('data/feedback/feedback.tsv')
+    if not fb_path.exists():
+        with open(fb_path, 'w', encoding='utf-8') as f:
             f.write('user_input\tquote\tfeedback\n')
     data = request.get_json()
     logger.debug(f'got feedback: {data}')
-    with open(Path('data/feedback.tsv'), 'a', encoding='utf-8') as f:
+    with open(fb_path, 'a', encoding='utf-8') as f:
         f.write(f'{data["query"]}\t{data["quote"][1:-1]}\t{data["feedback"]}\n')
     return jsonify('OK')
 
