@@ -7,8 +7,8 @@ from pathlib import Path
 
 from config import initialize_logging
 from flask import Flask, jsonify, render_template, request
-from preprocessing.embed_quotes import main as embed_quotes
-from preprocessing.parse_books import main as parse_books
+from preprocessing.embed_quotes import embed_quotes
+from preprocessing.parse_books import parse_books
 from process_query import answer_with_quote
 
 logger = initialize_logging(level=logging.INFO)

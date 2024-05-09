@@ -59,7 +59,7 @@ def parse_text(text: str) -> list:
     return quotes
 
 
-def main(inp: Path = Path('data/Автор_неизвестен_Библия_Новый_Завет_royallib_com.txt'),
+def parse_books(inp: Path = Path('data/Автор_неизвестен_Библия_Новый_Завет_royallib_com.txt'),
          out: Path = Path('data/verses.json'),
          inp_encoding='WINDOWS-1251'):
 
@@ -73,4 +73,4 @@ def main(inp: Path = Path('data/Автор_неизвестен_Библия_Н�
 
 
 if __name__ == '__main__':
-    main()
+    parse_books()
