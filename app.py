@@ -50,7 +50,7 @@ def process_input():
 
 @app.route('/record-feedback', methods=['POST'])
 def record_feedback():
-    fb_path = Path('data/feedback/feedback.tsv')
+    fb_path = Path('feedback/feedback.tsv')
     if not fb_path.exists():
         with open(fb_path, 'w', encoding='utf-8') as f:
             f.write('user_input\tquote\tfeedback\n')

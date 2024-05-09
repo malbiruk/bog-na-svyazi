@@ -1,7 +1,7 @@
 import logging
 
 
-def initialize_logging(level=logging.INFO, folder: str = '.'):
+def initialize_logging(level=logging.INFO, fname: str = 'out.log'):
     '''
     initialize logging (default to file 'out.log' in folder and to stdout)
     '''
@@ -9,7 +9,7 @@ def initialize_logging(level=logging.INFO, folder: str = '.'):
     logger_.setLevel(level)
     formatter = logging.Formatter(
         '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    filehandler = logging.FileHandler(f'{folder}/out.log')
+    filehandler = logging.FileHandler(fname)
     filehandler.setLevel(level)
     filehandler.setFormatter(formatter)
     streamhandler = logging.StreamHandler()

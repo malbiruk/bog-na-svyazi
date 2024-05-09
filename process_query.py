@@ -32,9 +32,12 @@ def semantic_search(user_embedding, data, threshold: float, top_n: int) -> tuple
     return selected_match[0], selected_match[1]
 
 
-def answer_with_quote(user_input: str, data: list,
-                      threshold: float = 0.6, top_n: int = 20) -> dict:
-    model = SentenceTransformer('cointegrated/rubert-tiny2')
+def answer_with_quote(user_input: str,
+                      data: list,
+                      threshold: float = 0.6,
+                      top_n: int = 20,
+                      model_name='cointegrated/rubert-tiny2') -> dict:
+    model = SentenceTransformer(model_name)
     embedded_user_input = model.encode(user_input)
     best_match, best_score = semantic_search(embedded_user_input, data, threshold, top_n)
 
