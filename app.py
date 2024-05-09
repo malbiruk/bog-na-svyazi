@@ -65,8 +65,8 @@ def generate_data_files():
     if not Path('data/verses.json').exists():
         parse_books()
     if not Path('data/verses_with_embeddings.json').exists():
-        embed_quotes()
+        embed_quotes(model_name='cointegrated/rubert-tiny2')
 
 if __name__ == '__main__':
     generate_data_files()
-    # app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0')

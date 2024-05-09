@@ -23,13 +23,12 @@ def semantic_search(user_embedding, data, threshold: float, top_n: int) -> tuple
             top_matches.append((entry, similarity_score))
 
     if not top_matches:
-        return None, None
+        return None
 
     top_matches.sort(key=lambda x: x[1], reverse=True)
-    selected_match = random.choice(top_matches[:top_n])
     logger.debug([(i[0]['quote'], i[1]) for i in top_matches[:top_n]])
 
-    return selected_match[0], selected_match[1]
+    return top_matches
 
 
 def answer_with_quote(user_input: str,
@@ -39,9 +38,11 @@ def answer_with_quote(user_input: str,
                       model_name='cointegrated/rubert-tiny2') -> dict:
     model = SentenceTransformer(model_name)
     embedded_user_input = model.encode(user_input)
-    best_match, best_score = semantic_search(embedded_user_input, data, threshold, top_n)
+    top_matches = semantic_search(embedded_user_input, data, threshold, top_n)
+    selected_match = random.choice(top_matches)
+    best_match, best_score = selected_match
 
-    if best_match:
+    if top_matches:
         return {
             'quote': '"' + best_match['quote'] + '"',
             'from': best_match['from'],
