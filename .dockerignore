@@ -3,6 +3,6 @@
 **/out.log
 **/draft.py
 **/test_outputs
-**/*.json
+data/*.json
 **/*.tsv
 fly.toml

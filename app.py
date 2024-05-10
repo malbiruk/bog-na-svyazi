@@ -69,4 +69,4 @@ def generate_data_files():
 
 if __name__ == '__main__':
     generate_data_files()
-    app.run(host='0.0.0.0')
+    # app.run(host='0.0.0.0')
