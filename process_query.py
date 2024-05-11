@@ -39,10 +39,10 @@ def answer_with_quote(user_input: str,
     model = SentenceTransformer(model_name)
     embedded_user_input = model.encode(user_input)
     top_matches = semantic_search(embedded_user_input, data, threshold, top_n)
-    selected_match = random.choice(top_matches)
-    best_match, best_score = selected_match
 
     if top_matches:
+        selected_match = random.choice(top_matches)
+        best_match, best_score = selected_match
         return {
             'quote': '"' + best_match['quote'] + '"',
             'from': best_match['from'],
