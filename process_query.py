@@ -48,7 +48,7 @@ def answer_with_quote(user_input: str,
             'from': best_match['from'],
             'score': best_score
         }
-    best_match, best_score = semantic_search(embedded_user_input, data, -1, 1)
+    best_match, best_score = semantic_search(embedded_user_input, data, -1, 1)[0]
     return {
         'quote': '"' + best_match['quote'] + '"',
         'from': best_match['from'],
