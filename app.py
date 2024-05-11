@@ -11,7 +11,7 @@ from preprocessing.embed_quotes import embed_quotes
 from preprocessing.parse_books import parse_books
 from process_query import answer_with_quote
 
-logger = initialize_logging(level=logging.DEBUG)
+logger = initialize_logging(level=logging.INFO)
 
 app = Flask(__name__)
 app.static_folder = 'static'
@@ -69,4 +69,4 @@ def generate_data_files():
 
 if __name__ == '__main__':
     generate_data_files()
-    app.run(host='0.0.0.0')
+    # app.run(host='0.0.0.0')
