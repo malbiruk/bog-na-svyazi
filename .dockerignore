@@ -6,3 +6,4 @@
 data/*.json
 **/*.tsv
 fly.toml
+finetuning/models/rbt2-10052024_021936/*

@@ -65,7 +65,7 @@ def generate_data_files():
     if not Path('data/verses.json').exists():
         parse_books()
     if not Path('data/verses_with_embeddings.json').exists():
-        embed_quotes(model_name='finetuning/models/rbt2-10052024_021936')
+        embed_quotes(model_name='finetuning/models/rbt2-13052024_205659')
 
 if __name__ == '__main__':
     generate_data_files()
