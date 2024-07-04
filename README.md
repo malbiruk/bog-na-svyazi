@@ -1,4 +1,4 @@
-# [bog-na-svyazi.ru](https://www.bog-na-svyazi.ru/)
+# [bog-na-svyazi.ru](https://bog-na-svyazi.ru/)
 
 Проект был представлен на христианском хакатоне [IT FOR CHRIST](https://www.it4christ.by/) 11-12 мая 2024, и был удостоин приза зрительских симпатий. 
 
