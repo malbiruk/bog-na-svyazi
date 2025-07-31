@@ -5,4 +5,5 @@ Flask==3.0.3
 # scipy==1.13.0
 # sentence-transformers==2.7.0
 # tqdm==4.66.2
+# pandas
 gunicorn

@@ -1,12 +1,14 @@
-'''
+"""
 This is the main script
-'''
+"""
+
 import json
 import logging
 from pathlib import Path
 
-from config import initialize_logging
 from flask import Flask, jsonify, render_template, request
+
+from config import initialize_logging
 from preprocessing.embed_quotes import embed_quotes
 from preprocessing.parse_books import parse_books
 from process_query import answer_with_quote
@@ -14,60 +16,59 @@ from process_query import answer_with_quote
 logger = initialize_logging(level=logging.INFO)
 
 app = Flask(__name__)
-app.static_folder = 'static'
+app.static_folder = "static"
 
 
-@app.route('/')
+@app.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
 
-@app.route('/support')
+@app.route("/support")
 def support():
-    return render_template('support.html')
+    return render_template("support.html")
 
 
-@app.route('/error')
+@app.route("/error")
 def error():
-    return render_template('error.html')
+    return render_template("error.html")
 
 
-@app.route('/process', methods=['POST'])
+@app.route("/process", methods=["POST"])
 def process_input():
-    with open(Path('data/verses_with_embeddings.json'),
-              encoding='utf-8') as f:
+    with open(Path("data/verses_with_embeddings.json"), encoding="utf-8") as f:
         verses = json.load(f)
 
     data = request.get_json()
-    user_input = data['query']
-    logger.debug(f'got input: {user_input}')
+    user_input = data["query"]
+    logger.debug(f"got input: {user_input}")
     quote = answer_with_quote(user_input, verses)
-    logger.debug(f'quote: {quote["quote"]}\n'
-                 f'from: {quote["from"]}\n'
-                 f'score: {quote["score"]}')
+    logger.debug(
+        f"quote: {quote['quote']}\nfrom: {quote['from']}\nscore: {quote['score']}"
+    )
     return jsonify(quote)
 
 
-@app.route('/record-feedback', methods=['POST'])
+@app.route("/record-feedback", methods=["POST"])
 def record_feedback():
-    fb_path = Path('feedback/feedback.tsv')
+    fb_path = Path("feedback/feedback.tsv")
     if not fb_path.exists():
-        with open(fb_path, 'w', encoding='utf-8') as f:
-            f.write('user_input\tquote\tfeedback\n')
+        with open(fb_path, "w", encoding="utf-8") as f:
+            f.write("user_input\tquote\tfeedback\n")
     data = request.get_json()
-    logger.debug(f'got feedback: {data}')
-    with open(fb_path, 'a', encoding='utf-8') as f:
-        f.write(f'{data["query"]}\t{data["quote"][1:-1]}\t{data["feedback"]}\n')
-    return jsonify('OK')
+    logger.debug(f"got feedback: {data}")
+    with open(fb_path, "a", encoding="utf-8") as f:
+        f.write(f"{data['query']}\t{data['quote'][1:-1]}\t{data['feedback']}\n")
+    return jsonify("OK")
 
 
 def generate_data_files():
-    if not Path('data/verses.json').exists():
+    if not Path("data/verses.json").exists():
         parse_books()
-    if not Path('data/verses_with_embeddings.json').exists():
-        embed_quotes(model_name='finetuning/models/rbt2-13052024_205659')
+    if not Path("data/verses_with_embeddings.json").exists():
+        embed_quotes(model_name="finetuning/models/rbt2-31072025_220714")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     generate_data_files()
     # app.run(host='0.0.0.0')
