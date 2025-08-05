@@ -1,0 +1,18 @@
+services:
+  bog-na-svyazi:
+    build: .
+    container_name: bog-na-svyazi
+    ports:
+      - "8090:80"
+    volumes:
+      - ./feedback:/app/feedback
+      - ./data:/app/data
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
